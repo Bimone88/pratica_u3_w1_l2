@@ -36,3 +36,59 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-image: url(./images/illustration-art-open-fantasy-book-hd-wallpaper_594776-1121.avif)
+}
+
+.navbar-custom {
+  background-color: #004d99; 
+}
+
+.nav-link {
+  color: #fff !important;
+}
+
+.footer-custom {
+  background-color: #002d66; 
+}
+
+.card-custom {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  height: 100%;
+}
+
+.card-custom:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  height: calc(100% - 200px);
+  overflow: hidden;
+  background-color: orange;
+  color: white;
+}
+
+.card-column {
+  padding: 10px
+}
+
+.main-content {
+  min-height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
+.content-wrap {
+  flex: 1; 
+  padding-bottom: 50px; 
+}
+
