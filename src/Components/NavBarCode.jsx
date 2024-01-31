@@ -1,3 +1,4 @@
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -9,7 +10,7 @@ const MyNavCode = () => {
       expand="lg"
       bg="dark"
       variant="dark"
-      class="navbar-custom"
+      className="navbar-custom"
     >
       <Container>
         <Navbar.Brand href="#home">BookStore</Navbar.Brand>
@@ -21,6 +22,9 @@ const MyNavCode = () => {
             <Nav.Link href="#">Browse</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Navbar.Text className="text-muted">
+          IL SITO DOVE I NOSTRI LIBRI NON SEMBRANO NEANCHE LIBRI
+        </Navbar.Text>
       </Container>
     </Navbar>
   );
