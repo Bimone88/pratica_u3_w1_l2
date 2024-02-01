@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
+import CommentArea from "./CommentArea";
 
 class SingleBook extends Component {
   render() {
@@ -16,6 +17,7 @@ class SingleBook extends Component {
           <Card.Text>Price: ${book.price}</Card.Text>
           <Card.Text>Category: {book.category}</Card.Text>
         </Card.Body>
+        {selected && <CommentArea asin={book.asin} />}
       </Card>
     );
   }

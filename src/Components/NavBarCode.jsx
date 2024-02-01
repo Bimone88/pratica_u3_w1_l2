@@ -23,7 +23,7 @@ const MyNavCode = () => {
           </Nav>
         </Navbar.Collapse>
         <Navbar.Text className="text-muted">
-          IL SITO DOVE I NOSTRI LIBRI NON SEMBRANO NEANCHE LIBRI
+          I NOSTRI LIBRI NON SEMBRANO LIBRI
         </Navbar.Text>
       </Container>
     </Navbar>
