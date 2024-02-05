@@ -1,21 +1,31 @@
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
-import React from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import NavBarCode from "./Components/NavBarCode";
 import MyFooterCode from "./Components/MyFooterCode";
 import WelcomePageCode from "./Components/WelcomePageCode";
 import BookList from "./Components/BookList";
-import books from "../src/data/fantasy.json";
+import CommentArea from "./Components/CommentArea";
+import books from "./data/fantasy.json";
 
 function App() {
   return (
     <div className="main-content">
-      <div className="content-wrap">
-        <NavBarCode />
+      <NavBarCode />
+      <Container className="mt-3">
         <WelcomePageCode subtitle="Esplora la nostra vasta collezione di libri fantasy! E fatti due risate sulle mie cards" />
-        <BookList books={books} />
-      </div>
+        <Row>
+          <Col md={8}>
+            <BookList books={books} />
+          </Col>
+          <Col md={4}>
+            {/* CommentArea ora è gestito dentro BookList per mostrare i commenti del libro selezionato */}
+          </Col>
+        </Row>
+      </Container>
       <MyFooterCode />
     </div>
   );

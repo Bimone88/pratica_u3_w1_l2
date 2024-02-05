@@ -2,57 +2,35 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 import SingleBook from "./SingleBook";
+import CommentArea from "./CommentArea";
 
 class BookList extends Component {
   state = {
-    search: "",
-    selectedBook: null,
+    selectedBookAsin: null,
   };
 
-  updateSearch = (e) => {
-    this.setState({ search: e.target.value });
-  };
-
-  selectBook = (book) => {
-    this.setState({ selectedBook: book });
+  selectBook = (asin) => {
+    this.setState({ selectedBookAsin: asin });
   };
 
   render() {
-    const filteredBooks = this.props.books.filter((book) =>
-      book.title.toLowerCase().includes(this.state.search.toLowerCase())
-    );
-
     return (
       <Container>
         <Row>
-          <Col>
-            <Form.Control
-              type="text"
-              placeholder="Cerca un libro..."
-              value={this.state.search}
-              onChange={this.updateSearch}
-            />
-          </Col>
-        </Row>
-        <Row>
-          {filteredBooks.map((book) => (
-            <Col
-              key={book.asin}
-              xs={12}
-              md={6}
-              lg={4}
-              xl={3}
-              style={{ marginBottom: "30px" }}
-            >
+          <Col md={8}>
+            {this.props.books.map((book) => (
               <SingleBook
+                key={book.asin}
                 book={book}
-                selected={this.state.selectedBook === book}
                 onSelect={this.selectBook}
+                selectedAsin={this.state.selectedBookAsin}
               />
-            </Col>
-          ))}
+            ))}
+          </Col>
+          <Col md={4}>
+            <CommentArea asin={this.state.selectedBookAsin} />
+          </Col>
         </Row>
       </Container>
     );

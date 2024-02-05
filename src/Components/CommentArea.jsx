@@ -3,6 +3,7 @@ import CommentsList from "./CommentsList";
 import AddComment from "./AddComment";
 import Loading from "./Loading";
 import Error from "./Error";
+
 class CommentArea extends Component {
   state = {
     comments: [],
@@ -10,60 +11,50 @@ class CommentArea extends Component {
     isError: false,
   };
 
-  componentDidMount() {
-    this.fetchComments();
+  componentDidUpdate(prevProps) {
+    if (this.props.asin && this.props.asin !== prevProps.asin) {
+      this.fetchComments();
+    }
   }
 
   fetchComments = () => {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, isError: false });
     fetch(
       `https://striveschool-api.herokuapp.com/api/comments/${this.props.asin}`,
       {
         headers: {
+          "Content-Type": "application/json",
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWJiYTBhZjViMjYxNTAwMTk4YTY5NDgiLCJpYXQiOjE3MDY3OTUxODMsImV4cCI6MTcwODAwNDc4M30.ixpuP0AkqM2YXzvRK-Yk97CgkWaPnHCGYMxLUqVmSQM",
         },
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
       .then((comments) =>
         this.setState({ comments: comments, isLoading: false })
       )
-      .catch((error) => this.setState({ isError: true, isLoading: false }));
-  };
-
-  handleDeleteComment = (commentId) => {
-    fetch(`https://striveschool-api.herokuapp.com/api/comments/${commentId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWJiYTBhZjViMjYxNTAwMTk4YTY5NDgiLCJpYXQiOjE3MDY3OTUxODMsImV4cCI6MTcwODAwNDc4M30.ixpuP0AkqM2YXzvRK-Yk97CgkWaPnHCGYMxLUqVmSQM",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          this.fetchComments(); // Ricarica i commenti dopo l'eliminazione
-        }
-      })
-      .catch((error) => this.setState({ isError: true }));
+      .catch(() => this.setState({ isError: true, isLoading: false }));
   };
 
   render() {
     const { comments, isLoading, isError } = this.state;
-
-    if (isLoading) return <Loading />;
-    if (isError) return <Error message="Errore nel caricamento dei commenti" />;
+    const { asin } = this.props;
 
     return (
       <div>
-        <CommentsList
-          comments={comments}
-          onDeleteComment={this.handleDeleteComment}
-        />
-        <AddComment
-          asin={this.props.asin}
-          onCommentAdded={this.fetchComments}
-        />
+        {isLoading && <Loading />}
+        {isError && <Error message="Errore nel caricamento dei commenti" />}
+        {asin && !isLoading && !isError && (
+          <>
+            <CommentsList comments={comments} />
+            <AddComment asin={asin} onCommentAdded={this.fetchComments} />
+          </>
+        )}
       </div>
     );
   }
